@@ -21,6 +21,7 @@ export const createSong = async (req, res, next) => {
 			return res.status(400).json({ message: "Please upload all files" });
 		}
 
+        // Get different parameters of the songs from req.body, .files.audioFile, .files.imageFile
 		const { title, artist, albumId, duration } = req.body;
 		const audioFile = req.files.audioFile;
 		const imageFile = req.files.imageFile;
@@ -72,7 +73,7 @@ export const deleteSong = async (req, res, next) => {
 		console.log("Error in deleteSong", error);
 		next(error);
 	}
-};
+}
 
 export const createAlbum = async (req, res, next) => {
 	try {
@@ -86,7 +87,7 @@ export const createAlbum = async (req, res, next) => {
 			artist,
 			imageUrl,
 			releaseYear,
-		});
+		})
 
 		await album.save();
 
@@ -95,20 +96,20 @@ export const createAlbum = async (req, res, next) => {
 		console.log("Error in createAlbum", error);
 		next(error);
 	}
-};
+}
 
 export const deleteAlbum = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		await Song.deleteMany({ albumId: id });
-		await Album.findByIdAndDelete(id);
-		res.status(200).json({ message: "Album deleted successfully" });
+		await Album.findByIdAndDelete(id)
+		res.status(200).json({ message: "Album deleted successfully" })
 	} catch (error) {
 		console.log("Error in deleteAlbum", error);
 		next(error);
 	}
-};
+}
 
 export const checkAdmin = async (req, res, next) => {
 	res.status(200).json({ admin: true });
-};
+}

@@ -21,7 +21,7 @@ import statRoutes from "./routes/stat.route.js"
 // Load environment variables
 dotenv.config() 
 
-const __dirname = path.resolve() 
+const __dirname = path.resolve() // This
 const app = express() 
 // const PORT = process.env.PORT || 5000
 const PORT = process.env.PORT 
@@ -38,11 +38,12 @@ app.use(
 
 app.use(express.json())  // to parse req.body
 app.use(clerkMiddleware())  // this will add auth to req obj => req.auth
+
 app.use(
-	fileUpload({
-		useTempFiles: true,
+	fileUpload({ 
+		useTempFiles: true, // This tells the middleware to store uploaded files temporarily on the disk instead of keeping them in the memory
 		tempFileDir: path.join(__dirname, "tmp"),
-		createParentPath: true,
+		createParentPath: true, // this option will automatically create the directory specified in tempFileDir if it doesn’t already exist
 		limits: {
 			fileSize: 10 * 1024 * 1024, // 10MB  max file size
 		},
@@ -81,14 +82,16 @@ if (process.env.NODE_ENV === "production") {
 	}) 
 }
 
-// error handler
+// Error handler
 app.use((err, req, res, next) => {
-	res.status(500).json({ message: process.env.NODE_ENV === "production" ? "Internal server error" : err.message }) 
-}) 
+    res.status(500).json({
+        message: process.env.NODE_ENV === "production" ? "Internal Server Error" : err.message
+    })
+})
 
 
 // This function starts the server
-httpServer.listen(PORT, () => {
+app.listen(PORT, () => {
 	console.log("Server is running on port " + PORT) 
     // And then connect to the database
 	connectDB() 
