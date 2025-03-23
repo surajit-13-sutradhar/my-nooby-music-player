@@ -6,7 +6,7 @@ import cloudinary from "../lib/cloudinary.js";
 const uploadToCloudinary = async (file) => {
 	try {
 		const result = await cloudinary.uploader.upload(file.tempFilePath, {
-			resource_type: "auto",
+			resource_type: "auto", // This
 		});
 		return result.secure_url;
 	} catch (error) {
@@ -57,9 +57,9 @@ export const deleteSong = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 
-		const song = await Song.findById(id);
+		const song = await Song.findById(id)
 
-		// if song belongs to an album, update the album's songs array
+		// if song is in an album, update the album's songs array
 		if (song.albumId) {
 			await Album.findByIdAndUpdate(song.albumId, {
 				$pull: { songs: song._id },

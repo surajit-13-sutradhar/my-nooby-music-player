@@ -4,8 +4,8 @@ import { User } from "../models/user.model.js";
 
 export const getStats = async (req, res, next) => {
 	try {
-		const [totalSongs, totalAlbums, totalUsers, uniqueArtists] = await Promise.all([
-			Song.countDocuments(),
+		const [totalSongs, totalAlbums, totalUsers, uniqueArtists] = await Promise.all([ // Promise.all runs everything in parallel
+			Song.countDocuments(), // counts the number of documents that match filter
 			Album.countDocuments(),
 			User.countDocuments(),
 

@@ -96,3 +96,6 @@ app.listen(PORT, () => {
     // And then connect to the database
 	connectDB() 
 }) 
+
+
+// SocketIo implementation
